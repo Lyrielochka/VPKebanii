@@ -2,16 +2,17 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 
-# Install dependencies
+# Install all dependencies (including dev) for build
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm install --no-audit --no-fund
 
 # Copy source and build
 COPY tsconfig.json ./
 COPY src ./src
 COPY public ./public
-RUN npm install --save-dev typescript
 RUN npx tsc -p tsconfig.json
+# Remove dev dependencies to slim down for runtime
+RUN npm prune --production
 
 ### Runtime image
 FROM node:20-alpine AS runtime

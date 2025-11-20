@@ -3,7 +3,8 @@ FROM node:20-alpine AS build
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+# Using npm install instead of npm ci because lock file and peer deps are not in sync.
+RUN npm install --no-audit --no-fund --legacy-peer-deps
 COPY . .
 RUN npm run build
 

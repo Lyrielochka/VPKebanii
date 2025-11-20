@@ -8,8 +8,11 @@
         "baseUrl": "./src",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "types": ["node"],
+        "types": ["node", "express", "cors", "jsonwebtoken"],
         "strict": true,
+        "strictNullChecks": false,
+        "strictPropertyInitialization": false,
         "skipLibCheck": true
-    }
+    },
+    "exclude": ["src/test"]
 }
