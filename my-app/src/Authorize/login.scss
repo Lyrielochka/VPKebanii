@@ -1,0 +1,104 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #141414;
+}
+
+.login-form {
+  background-color: #1a1a1a;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 127, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  color: #fff;
+
+  h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #FF6600;
+    font-size: 24px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: #ccc;
+
+    input,
+    select {
+      width: 93%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border: 1px solid #555;
+      border-radius: 6px;
+      font-size: 1rem;
+      background-color: #141414;
+      color: #fff;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: #ffa733;
+        outline: none;
+      }
+    }
+  }
+
+  button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #1a1a1a;
+    color: #ffa733;
+    font-size: 1rem;
+    border: 1.5px solid #FF6600; 
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    color: #ffffff;                  
+    font-weight: 500;
+
+  transition: all 0.3s ease;
+    &:hover {
+      background-color: #3a261a;       
+      border-color: #ffa733;       
+      box-shadow: 0 0 10px rgba(255, 127, 0, 0.4);
+    }
+  }
+}
+
+.error {
+  border-color: #dc3545 !important;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.success-message {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  animation: fadeIn 0.5s ease-in-out;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

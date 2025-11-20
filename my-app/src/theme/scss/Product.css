@@ -1,0 +1,286 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+.Card {
+  width: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background-color: #fff;
+  margin: 15px;
+  transition: transform 0.2s ease;
+}
+
+.Card:hover {
+  transform: scale(1.02);
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 30px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  z-index: 2;
+}
+
+.heart-icon.liked {
+  color: red;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.amenities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.amenity-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  object-fit: contain;
+}
+
+.card-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  text-align: left;
+}
+
+
+.formeditcontainer {
+  margin: 0 auto;
+  width: 50%; 
+}
+
+.cardForm {
+  margin: 0 auto;
+  width: 60%;  
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* КАРДДЕТЕЙЛС И КНОПКА ПОДРОБНЕЕ ЕСЛИ ПОНАДОБИТСЯ */
+
+.details-button {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.details-button:hover {
+  background-color: #005fa3;
+}
+
+.CardModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.CardDetailsContent {
+  background-color: #fff;
+  padding: 30px;
+  width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.CardClose {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.details-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.details-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.details-location {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.details-description {
+  font-size: 15px;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+.details-section h4 {
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+.details-amenities,
+.details-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.details-amenities li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.details-amenities img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.details-features li {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.details-price {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #0077cc;
+}

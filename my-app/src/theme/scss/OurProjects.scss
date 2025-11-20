@@ -1,0 +1,138 @@
+.mark {
+  padding-bottom: 1%;
+}
+
+.wrapperProjects {
+  color: #fff;
+  width: 100%;
+
+  &__title {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    text-align: center;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 1250px;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
+      }
+    }
+  }
+
+  &__card {
+    width: 500px;
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h2 {
+      text-align: center;
+      font-size: 26px;
+    }
+
+    p {
+      color: #5b5a5a;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    a {
+      display: block;
+      width: 100%;
+    }
+
+    .project-img {
+      width: 100%;
+      padding-bottom: 20px;
+    }
+
+    .project-text {
+      width: 90%;
+    }
+  }
+
+  &__line {
+    margin-top: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 2px;
+
+    img {
+      width: 100%;
+      max-width: 1000px;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .wrapperProjects__container {
+    width: 450px;
+  }
+}
+
+@media (max-width: 425px) {
+  .wrapperProjects__container img {
+    width: 100%;
+    height: auto;
+  }
+
+  .wrapperProjects__title {
+    padding-top: 15%;
+    padding-bottom: 15%;
+  }
+
+  .wrapperProjects__card {
+    width: 400px;
+    margin: 10px;
+  }
+
+  .wrapperProjects__container {
+    width: 400px;
+  }
+
+  .wrapperProjects__line img {
+    width: 80%;
+  }
+}
+
+@media (max-width: 430px) {
+  .wrapperProjects__container {
+    width: 400px;
+  }
+}
+
+@media (max-width: 390px) {
+  .wrapperProjects__container {
+    width: 350px;
+  }
+}
+
+@media (max-width: 393px) {
+  .wrapperProjects__container {
+    width: 350px;
+  }
+}
+
+@media (max-width: 375px) {
+  .wrapperProjects__container {
+    width: 300px;
+  }
+}

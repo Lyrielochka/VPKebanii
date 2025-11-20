@@ -1,0 +1,58 @@
+.admin-users {
+    padding-top: 100px;
+  background-color: #141414;
+  color: #fff;
+  height: 100vh;
+
+  &__list {
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+
+  &__card {
+    background-color: #1a1a1a;
+    border: 1px solid #ffa733;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+  }
+
+  &__edit-btn {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: #5b2c0d;
+    border: 2px solid #FF6600;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: #3a261a;
+      border-color: #ffa733;
+      box-shadow: 0 0 10px rgba(255, 127, 0, 0.4);
+    }
+  }
+}
+
+.admin-users__delete-btn {
+    margin-top: 10px;
+    margin-left: 2%;
+    padding: 6px 12px;
+    background-color: #5b2c0d;
+    border: 2px solid #FF6600;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #3a1a1a;
+    border-color: #ff7777;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+  }
+}

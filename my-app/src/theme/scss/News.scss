@@ -1,0 +1,144 @@
+.news {
+  padding: 80px 20px;
+  background-color: #141414;
+  color: #fff;
+  text-align: center;
+
+  &__title {
+    font-size: 32px;
+    margin-bottom: 40px;
+  }
+
+  &__slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+  }
+
+  &__cards {
+    padding-top: 20px;
+    display: flex;
+    gap: 20px;
+  }
+
+  &__card {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .news__more {
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        background-color: #5b2c0d;
+        border: 2px solid #FF6600;      
+        color: #ffffff;                  
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+
+      &:hover {
+        background-color: #3a261a;       
+        border-color: #ffa733;       
+        box-shadow: 0 0 10px rgba(255, 127, 0, 0.4);
+      }
+    }
+  }
+
+  &__nav {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        background: transparent;
+        cursor: pointer;
+        font-size: 22px;
+        line-height: 1;
+        color: #fff;
+        transition: 0.6s;
+
+    &:hover {
+          border-color: #ff6600;
+          color: #ff6600;
+    }
+  }
+
+  &__pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    .news__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #555;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &.active {
+        background: #ff6600;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 1024px) { 
+  .news__card {
+    width: 250px;
+  } 
+
+
+  .news__nav {
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
+  }
+
+    .news__slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) { 
+  .news__card {
+    width: 190px;
+  }
+}
+
+
+@media (max-width: 430px) { 
+  .news__cards{
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 425px) { 
+  .news__cards{
+    flex-direction: column;
+  }
+}

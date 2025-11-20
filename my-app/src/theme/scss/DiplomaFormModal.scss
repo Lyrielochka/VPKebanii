@@ -1,0 +1,119 @@
+.diploma-form-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+
+  &__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  &__content {
+    position: relative;
+    background: #1c1c1c;
+    color: #fff;
+    width: 600px;
+    margin: 80px auto;
+    padding: 30px;
+    border-radius: 10px;
+    z-index: 1000;
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.4);
+
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #FF6600;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      input, select {
+        background: #2a2a2a;
+        border: 1px solid #FF6600;
+        padding: 10px;
+        border-radius: 6px;
+        color: #fff;
+        font-size: 16px;
+      }
+
+      select {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__file {
+    cursor: pointer;
+    color: #ffa733;
+    font-weight: bold;
+    input {
+      display: none;
+    }
+  }
+
+  &__preview {
+    margin-top: 10px;
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #FF6600;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #5b2c0d;
+      border: 2px solid #FF6600;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: #3a261a;
+        border-color: #ffa733;
+        box-shadow: 0 0 10px rgba(255, 127, 0, 0.4);
+      }
+    }
+  }
+}
+
+.diploma-form-modal__file {
+  position: relative;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.custom-upload-button {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #bb4b22;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.hidden-select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
