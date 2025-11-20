@@ -1,23 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "📦 Загрузка Docker образов..."
+cd ~/VPKebanii
+
+echo "Loading Docker images..."
 docker load -i vpkebanii-images.tar
 rm vpkebanii-images.tar
 
-echo "✅ Образы загружены!"
+echo "Images loaded!"
 echo ""
+echo "Starting containers..."
 
-cd ~/VPKebanii
-
-echo "🚀 Запуск контейнеров..."
-docker compose down --remove-orphans || true
+docker compose down || true
 docker compose up -d
 
-echo "⏳ Ожидание запуска сервисов..."
-sleep 10
+echo "Waiting for services to start (15 sec)..."
+sleep 15
 
+echo ""
+echo "Container status:"
 docker compose ps
 
-echo "✅ Деплой завершен!"
-docker compose logs --tail=20
+echo ""
+echo "Deploy completed!"
+echo ""
+echo "Website available at:"
+echo "  https://wmp.by"
