@@ -10,9 +10,9 @@ $env:DOCKER_BUILDKIT = "1"
 $env:COMPOSE_DOCKER_CLI_BUILD = "1"
 $env:BUILDKIT_PROGRESS = "plain"
 
-# Build
+# Build using docker-compose.build.yml
 Write-Host "[INFO] Building frontend and backend..." -ForegroundColor Blue
-docker compose build `
+docker-compose -f docker-compose.build.yml build `
   --no-cache `
   --parallel `
   --build-arg NODE_OPTIONS="--max-old-space-size=8192"
@@ -53,9 +53,9 @@ Write-Host "`n[NEXT STEP] On server run:" -ForegroundColor Cyan
 Write-Host "  cd ~/VPKebanii" -ForegroundColor White
 Write-Host "  docker load -i vpkebanii-images.tar" -ForegroundColor White
 Write-Host "  rm vpkebanii-images.tar" -ForegroundColor White
-Write-Host "  docker compose down --remove-orphans" -ForegroundColor White
-Write-Host "  docker compose up -d" -ForegroundColor White
-Write-Host "  docker compose ps" -ForegroundColor White
+Write-Host "  docker-compose down" -ForegroundColor White
+Write-Host "  docker-compose up -d" -ForegroundColor White
+Write-Host "  docker-compose ps" -ForegroundColor White
 
 Write-Host "`n"
 Read-Host "Press Enter to exit"
