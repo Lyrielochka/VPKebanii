@@ -30,7 +30,7 @@ export const Login = () => {
     if (Object.keys(validationErrors).length === 0) {
       try {
         const endpoint = isRegistering ? 'register' : 'login';
-        const res = await axios.post(`http://localhost:3001/${endpoint}`, {
+        const res = await axios.post(`http://wmp.by/${endpoint}`, {
           email,
           password
         });
