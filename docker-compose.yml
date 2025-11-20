@@ -65,8 +65,11 @@ services:
         condition: service_healthy
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 30s
@@ -79,3 +82,5 @@ networks:
     name: vpkebanii_net
 volumes:
   postgres_data:
+  caddy_data:
+  caddy_config:
