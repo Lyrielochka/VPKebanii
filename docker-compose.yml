@@ -8,8 +8,6 @@ services:
       POSTGRES_DB: appdb
       POSTGRES_USER: appuser
       POSTGRES_PASSWORD: app_password
-      # Оптимизация для малой памяти
-      POSTGRES_INITDB_ARGS: "-c shared_buffers=64MB -c effective_cache_size=128MB -c work_mem=4MB"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -19,19 +17,9 @@ services:
       retries: 5
       start_period: 10s
     restart: unless-stopped
-    # Ограничение памяти для контейнера
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 128M
 
   backend:
-    build:
-      context: ./nodeapi
-      args:
-        NODE_OPTIONS: "--max-old-space-size=512"
+    image: vpkebanii/backend:latest
     container_name: backend
     environment:
       DB_HOST: postgres
@@ -52,18 +40,9 @@ services:
       retries: 3
       start_period: 15s
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 128M
 
   frontend:
-    build:
-      context: ./my-app
-      args:
-        NODE_OPTIONS: "--max-old-space-size=512"
+    image: vpkebanii/frontend:latest
     container_name: frontend
     depends_on:
       backend:
@@ -77,12 +56,6 @@ services:
       retries: 3
       start_period: 15s
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 128M
 
   caddy:
     image: caddy:2-alpine
@@ -106,12 +79,6 @@ services:
       retries: 3
       start_period: 10s
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 128M
-        reservations:
-          memory: 64M
 
 networks:
   default:

@@ -1,29 +1,31 @@
-# Multi-stage Dockerfile for nodeapi (TypeScript Express backend)
+# Multi-stage Dockerfile for nodeapi (TypeScript Express backend) - ОПТИМИЗИРОВАН
 FROM node:20-alpine AS build
 WORKDIR /app
 
-ENV NODE_OPTIONS="--max-old-space-size=2048"
+ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-# Install all dependencies (including dev) for build
 COPY package*.json ./
-RUN npm install --no-audit --no-fund --prefer-offline --no-optional
+RUN npm ci --prefer-offline --no-audit --no-fund
 
-# Copy source and build
 COPY tsconfig.json ./
 COPY src ./src
 COPY public ./public
 
-RUN npx tsc -p tsconfig.json
+# Параллельная компиляция TypeScript
+RUN npx tsc -p tsconfig.json --incremental
 
-# Remove dev dependencies to slim down for runtime
+# Удалить dev зависимости
 RUN npm prune --production
 
-### Runtime image
+# Очистить от ненужных файлов
+RUN find . -name "*.ts" -delete && \
+    find . -name "*.map" -delete && \
+    find node_modules -name "*.test.js" -delete
+
 FROM node:20-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 
-# Install curl for healthcheck
 RUN apk add --no-cache curl
 
 COPY package*.json ./
@@ -33,6 +35,7 @@ COPY --from=build /app/public ./public
 
 EXPOSE 3001
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD curl -f http://localhost:3001/health || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:3001/health || exit 1
 
 CMD ["node", "dist/app.js"]
