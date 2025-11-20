@@ -15,7 +15,8 @@ Write-Host "[INFO] Building frontend and backend..." -ForegroundColor Blue
 docker-compose -f docker-compose.build.yml build `
   --no-cache `
   --parallel `
-  --build-arg NODE_OPTIONS="--max-old-space-size=8192"
+  --build-arg NODE_OPTIONS="--max-old-space-size=8192" `
+  --build-arg BUST_CACHE="$(Get-Random)"
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[ERROR] Build failed" -ForegroundColor Red
@@ -26,10 +27,10 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "`n[SUCCESS] Build completed!" -ForegroundColor Green
 Write-Host "`n[INFO] Exporting images...`n" -ForegroundColor Cyan
 
-# Export
+# Export (используем слэш вместо дефиса)
 docker save `
-  vpkebanii-frontend:latest `
-  vpkebanii-backend:latest `
+  vpkebanii/frontend:latest `
+  vpkebanii/backend:latest `
   -o vpkebanii-images.tar
 
 if ($LASTEXITCODE -ne 0) {
@@ -59,3 +60,4 @@ Write-Host "  docker-compose ps" -ForegroundColor White
 
 Write-Host "`n"
 Read-Host "Press Enter to exit"
+  

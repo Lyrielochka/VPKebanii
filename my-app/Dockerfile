@@ -1,11 +1,12 @@
-# Multi-stage Dockerfile for React frontend (my-app) - ОПТИМИЗИРОВАН ДЛЯ СКОРОСТИ
+# Multi-stage Dockerfile for React frontend (my-app)
 FROM node:20-alpine AS build
 WORKDIR /app
 
-# Максимально использовать памяти при сборке (нет ограничений)
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-# Кэш npm packages между сборками
+# Добавьте BUST_CACHE для инвалидации кэша при каждой сборке
+ARG BUST_CACHE=1
+
 COPY package*.json ./
 RUN npm install --prefer-offline --no-audit --no-fund
 
