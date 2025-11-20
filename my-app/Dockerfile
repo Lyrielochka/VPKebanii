@@ -7,7 +7,7 @@ ENV NODE_OPTIONS="--max-old-space-size=8192"
 
 # Кэш npm packages между сборками
 COPY package*.json ./
-RUN npm ci --prefer-offline --no-audit --no-fund
+RUN npm install --prefer-offline --no-audit --no-fund
 
 COPY . .
 
