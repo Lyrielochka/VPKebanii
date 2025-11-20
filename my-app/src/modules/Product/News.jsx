@@ -11,7 +11,7 @@ export function News() {
 
   useEffect(() => {
     axios
-      .get("http://wmp.by/news")
+      .get("https://wmp.by/news")
       .then((res) => setNews(res.data.reverse()))
       .catch((err) => console.error("Ошибка загрузки новостей:", err));
   }, []);
@@ -46,6 +46,7 @@ export function News() {
               <img
                 src={`${item.img}`}
                 alt={item.title}
+                loading="lazy"
                 className="news__image"
               />
               <h3>{item.title}</h3>

@@ -14,7 +14,7 @@ export function ReviewsPage() {
 
   const fetchReviews = async () => {
     try {
-      const res = await axios.get('http://wmp.by/reviews');
+      const res = await axios.get('https://wmp.by/reviews');
       setReviews(res.data);
     } catch (err) {
       console.error('Ошибка загрузки отзывов:', err.response?.data || err.message);
@@ -36,7 +36,7 @@ export function ReviewsPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://wmp.by/reviews', formData, {
+      await axios.post('https://wmp.by/reviews', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       await fetchReviews();
@@ -48,7 +48,7 @@ export function ReviewsPage() {
 
   const handleDelete = async (idReview) => {
     try {
-      await axios.delete(`http://wmp.by/reviews/${idReview}`, {
+      await axios.delete(`https://wmp.by/reviews/${idReview}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setReviews(prev => prev.filter(r => r.idReview !== idReview));
@@ -65,7 +65,7 @@ export function ReviewsPage() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://wmp.by/reviews/${editId}`, {
+      await axios.put(`https://wmp.by/reviews/${editId}`, {
         text: editText,
         rating: editRating
       }, {

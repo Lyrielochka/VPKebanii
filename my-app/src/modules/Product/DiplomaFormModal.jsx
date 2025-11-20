@@ -1,16 +1,27 @@
 import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../theme/scss/DiplomaFormModal.scss";
+import { buildImageUrl, getImageOptions } from "../../services/imageService";
 
 export function DiplomaFormModal({ item, onClose, onSuccess }) {
   const [form, setForm] = useState({ name: "", img: "" });
   const [imageOptions, setImageOptions] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://wmp.by/api/images")
-      .then((res) => setImageOptions(res.data))
-      .catch((err) => console.error("Ошибка загрузки изображений:", err));
+    let isMounted = true;
+
+    getImageOptions()
+      .then((images) => {
+        if (isMounted) {
+          setImageOptions(images);
+        }
+      })
+      .catch((err) => console.error("Failed to load images:", err));
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -35,9 +46,9 @@ export function DiplomaFormModal({ item, onClose, onSuccess }) {
 
     try {
       if (item?.idDiploma) {
-        await axios.put(`http://wmp.by/diplomas/${item.idDiploma}`, payload);
+        await axios.put(`https://wmp.by/diplomas/${item.idDiploma}`, payload);
       } else {
-        await axios.post("http://wmp.by/diplomas", payload);
+        await axios.post("https://wmp.by/diplomas", payload);
       }
       onSuccess();
     } catch (err) {
@@ -74,8 +85,9 @@ export function DiplomaFormModal({ item, onClose, onSuccess }) {
 
           {form.img && (
             <img
-              src={`http://wmp.by/Images/${form.img}`}
+              src={buildImageUrl(form.img)}
               alt="preview"
+              loading="lazy"
               className="diploma-form-modal__preview"
               style={{ maxHeight: "150px", marginTop: "10px" }}
             />

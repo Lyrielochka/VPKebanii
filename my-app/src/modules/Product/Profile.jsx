@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../theme/scss/Profile.scss";
+import { buildImageUrl, getImageOptions } from "../../services/imageService";
 
 export function Profile() {
   const role = localStorage.getItem("role");
@@ -28,16 +29,25 @@ export function Profile() {
   });
 
   useEffect(() => {
-    axios
-      .get("http://wmp.by/api/images")
-      .then((res) => setImageOptions(res.data))
-      .catch((err) => console.error("Ошибка загрузки изображений:", err));
+    let isMounted = true;
+
+    getImageOptions()
+      .then((images) => {
+        if (isMounted) {
+          setImageOptions(images);
+        }
+      })
+      .catch((err) => console.error("Failed to load images:", err));
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
     if (idUser) {
       axios
-        .get(`http://wmp.by/profiles/user/${idUser}`)
+        .get(`https://wmp.by/profiles/user/${idUser}`)
         .then((res) => {
           const profile = res.data;
           if (!profile || !profile.idProfile) {
@@ -97,7 +107,7 @@ export function Profile() {
     }
 
     try {
-      await axios.put(`http://wmp.by/profiles/${profileData.idProfile}`, {
+      await axios.put(`https://wmp.by/profiles/${profileData.idProfile}`, {
         fullName: profileData.fullName,
         gender: profileData.gender,
         parents: profileData.parents,
@@ -125,8 +135,9 @@ export function Profile() {
           <div className="profile__rank">
             {profileData.rank && (
               <img
-                src={`http://wmp.by/Images/${profileData.rank}`}
+                src={buildImageUrl(profileData.rank)}
                 alt="Звание"
+                loading="lazy"
               />
             )}
             {role === "admin" && (
@@ -147,8 +158,9 @@ export function Profile() {
           <div className="profile__avatar">
             {profileData.photo ? (
               <img
-                src={`http://wmp.by/Images/${profileData.photo}`}
+                src={buildImageUrl(profileData.photo)}
                 alt="Аватар"
+                loading="lazy"
               />
             ) : (
               <div className="profile__avatar-placeholder">Фото</div>
@@ -253,8 +265,9 @@ export function Profile() {
               {profileData.tokens.map((token, index) => (
                 <div key={index} className="profile__token-item">
                   <img
-                    src={`http://wmp.by/Images/${token}`}
+                    src={buildImageUrl(token)}
                     alt={`Жетон ${index + 1}`}
+                    loading="lazy"
                   />
                   {role === "admin" && (
                     <button

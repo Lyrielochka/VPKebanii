@@ -28,7 +28,7 @@ export function OurTeam() {
 
   useEffect(() => {
     axios
-      .get("http://wmp.by/profiles")
+      .get("https://wmp.by/profiles")
       .then((res) => setProfiles(res.data))
       .catch((err) => console.error("Ошибка загрузки профилей:", err));
   }, []);

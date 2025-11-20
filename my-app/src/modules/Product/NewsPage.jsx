@@ -30,7 +30,7 @@ export function NewsPage() {
 
   const fetchNews = async () => {
     try {
-      const res = await axios.get("http://wmp.by/news");
+      const res = await axios.get("https://wmp.by/news");
       setNews(res.data.reverse());
     } catch (err) {
       console.error("Ошибка загрузки новостей:", err);
@@ -39,7 +39,7 @@ export function NewsPage() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://wmp.by/news/${id}`);
+      await axios.delete(`https://wmp.by/news/${id}`);
       fetchNews();
     } catch (err) {
       console.error("Ошибка удаления:", err);
@@ -75,7 +75,12 @@ export function NewsPage() {
       <div className="news-page__list">
         {visibleNews.map((item) => (
           <div className="news-card" key={item.idNews || item.title}>
-            <img src={item.img} alt={item.title} className="news-card__image" />
+            <img
+              src={item.img}
+              alt={item.title}
+              loading="lazy"
+              className="news-card__image"
+            />
             <div className="news-card__content">
               <span className="news-card__category">{item.category}</span>
               <h2 className="news-card__title">{item.title}</h2>

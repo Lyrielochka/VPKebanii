@@ -21,7 +21,7 @@ export function AdminUsersPage() {
 
     if (token) {
       axios
-        .get("http://wmp.by/users-with-profiles", {
+        .get("https://wmp.by/users-with-profiles", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -47,7 +47,7 @@ export function AdminUsersPage() {
     if (!confirm) return;
 
     try {
-      await axios.delete(`http://wmp.by/users/${idUser}`, {
+      await axios.delete(`https://wmp.by/users/${idUser}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -7,7 +7,7 @@ export function NewsModal({ item, onClose }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>×</button>
-        <img src={item.img} alt={item.title} className="modal-image" />
+        <img src={item.img} alt={item.title} loading="lazy" className="modal-image" />
         <div className="modal-text">
           <span className="modal-category">{item.category}</span>
           <h2 className="modal-title">{item.title}</h2>
@@ -21,6 +21,7 @@ export function NewsModal({ item, onClose }) {
                   key={i}
                   src={src}
                   alt={`Доп. фото ${i + 1}`}
+                  loading="lazy"
                   className="modal-gallery__image"
                 />
               ))}

@@ -9,7 +9,7 @@
 //   const [editingCard, setEditingCard] = useState(null);
 
 //   useEffect(() => {
-//     fetch('http://wmp.by/api/cards')
+//     fetch('https://wmp.by/api/cards')
 //       .then(res => res.json())
 //       .then(data => {
 //         const parsed = data.map(card => ({
@@ -21,7 +21,7 @@
 //   }, []);
 
 //   const addCard = async (card) => {
-//     await fetch('http://wmp.by/api/cards', {
+//     await fetch('https://wmp.by/api/cards', {
 //       method: 'POST',
 //       headers: { 'Content-Type': 'application/json' },
 //       body: JSON.stringify(card)
@@ -30,7 +30,7 @@
 //   };
 
 //   const updateCard = async (card) => {
-//     await fetch(`http://wmp.by/api/cards/${editingCard.id}`, {
+//     await fetch(`https://wmp.by/api/cards/${editingCard.id}`, {
 //       method: 'PUT',
 //       headers: { 'Content-Type': 'application/json' },
 //       body: JSON.stringify(card)
@@ -39,7 +39,7 @@
 //   };
 
 //   const deleteCard = async (id) => {
-//     await fetch(`http://wmp.by/api/cards/${id}`, { method: 'DELETE' });
+//     await fetch(`https://wmp.by/api/cards/${id}`, { method: 'DELETE' });
 //     window.location.reload();
 //   };
 
