@@ -1,19 +1,10 @@
-# Caddy reverse proxy configuration
-# Frontend container: frontend:3000
-# Backend API: backend:3001 (prefixed with /api or direct image/static routes)
-
-############################################
-# Caddy reverse proxy with HTTPS (internal CA)
-############################################
-
 # Redirect all HTTP to HTTPS
 :80 {
   redir https://{host}{uri}
 }
 
-# HTTPS site (self-signed internal CA for local dev)
-localhost:443 {
-  tls internal
+# HTTPS site with Let's Encrypt certificate
+wmp.by {
   encode gzip
 
   @api path /api* /Images* /public* /health
