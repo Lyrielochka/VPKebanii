@@ -1,12 +1,18 @@
 {
-    "sourseMap": true,
+    "sourceMap": true,
     "compilerOptions": {
-        "target": "es6",
+        "target": "es2020",
         "module": "commonjs",
         "esModuleInterop": true,
-        "outDir": "build",
+        "outDir": "dist",
         "baseUrl": "./src",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-    }
+        "types": ["node", "express", "cors", "jsonwebtoken"],
+        "strict": true,
+        "strictNullChecks": false,
+        "strictPropertyInitialization": false,
+        "skipLibCheck": true
+    },
+    "exclude": ["src/test"]
 }

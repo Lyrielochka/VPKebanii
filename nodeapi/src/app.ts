@@ -18,7 +18,7 @@ const publicDir = path.resolve(__dirname, "..", "public");
 const runApp = async () => {
   try {
     await TestConnection.initialize();
-    await TestConnection.query("PRAGMA foreign_keys = ON;");
+    // SQLite foreign key enabling removed; now using PostgreSQL
 
     process.on("uncaughtException", async (err) => {
       await TestConnection.destroy();
@@ -42,6 +42,11 @@ const runApp = async () => {
     // 🔒 Авторизация и защищённые роуты — в самом конце
     app.use(authMiddleware);
     app.use(routerUser);
+
+    // Healthcheck endpoint for container orchestration
+    app.get("/health", (_req, res) => {
+      res.status(200).json({ status: "ok" });
+    });
 
     app.listen(3001, () => console.log("Server is running on port 3001"));
   } catch (err: any) {
