@@ -18,7 +18,7 @@ const publicDir = path.resolve(__dirname, "..", "public");
 const runApp = async () => {
   try {
     await TestConnection.initialize();
-    await TestConnection.query("PRAGMA foreign_keys = ON;");
+    // SQLite foreign key enabling removed; now using PostgreSQL
 
     process.on("uncaughtException", async (err) => {
       await TestConnection.destroy();

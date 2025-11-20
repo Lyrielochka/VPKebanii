@@ -5,8 +5,12 @@ import { Diploma } from "../entities/diploma.entity";
 import { Profile } from "../entities/profile.entites";
 
 export const TestConnection = new DataSource({
-  type: "better-sqlite3",
-  database: "db.sqlite",
+  type: "postgres",
+  host: process.env.DB_HOST || "postgres",
+  port: Number(process.env.DB_PORT) || 5432,
+  username: process.env.DB_USER || "appuser",
+  password: process.env.DB_PASS || "app_password",
+  database: process.env.DB_NAME || "appdb",
   entities: [User, Profile, News, Diploma],
   synchronize: true,
   logging: false,

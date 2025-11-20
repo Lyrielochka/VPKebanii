@@ -1,9 +1,36 @@
 version: "3.9"
 
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: app_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   backend:
     build: ./nodeapi
     container_name: backend
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: appuser
+      DB_PASS: app_password
+      DB_NAME: appdb
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
       - "3001:3001"
     healthcheck:
@@ -50,3 +77,5 @@ services:
 networks:
   default:
     name: vpkebanii_net
+volumes:
+  postgres_data:
