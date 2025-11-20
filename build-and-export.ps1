@@ -10,6 +10,10 @@ $env:DOCKER_BUILDKIT = "1"
 $env:COMPOSE_DOCKER_CLI_BUILD = "1"
 $env:BUILDKIT_PROGRESS = "plain"
 
+# Generate timestamp
+$timestamp = Get-Date -Format 'yyyyMMdd-HHmm'
+Write-Host "[INFO] Build timestamp: $timestamp" -ForegroundColor Yellow
+
 # Build using docker-compose.build.yml
 Write-Host "[INFO] Building frontend and backend..." -ForegroundColor Blue
 docker-compose -f docker-compose.build.yml build `
@@ -27,11 +31,12 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "`n[SUCCESS] Build completed!" -ForegroundColor Green
 Write-Host "`n[INFO] Exporting images...`n" -ForegroundColor Cyan
 
-# Export (используем слэш вместо дефиса)
+# Export with timestamp
+$archiveName = "vpkebanii-images-$timestamp.tar"
 docker save `
   vpkebanii/frontend:latest `
   vpkebanii/backend:latest `
-  -o vpkebanii-images.tar
+  -o $archiveName
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[ERROR] Export failed" -ForegroundColor Red
@@ -39,25 +44,24 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-Write-Host "`n[SUCCESS] Images saved to vpkebanii-images.tar" -ForegroundColor Green
+Write-Host "`n[SUCCESS] Images saved to $archiveName" -ForegroundColor Green
 
 # File size
-$fileSize = (Get-Item "vpkebanii-images.tar").Length
+$fileSize = (Get-Item $archiveName).Length
 $fileSizeMB = [math]::Round($fileSize / 1MB, 2)
 Write-Host "`n[INFO] Archive size: $fileSizeMB MB" -ForegroundColor Yellow
 
 Write-Host "`n[SUCCESS] Ready to upload to server!" -ForegroundColor Green
 Write-Host "`n[NEXT STEP] Upload archive:" -ForegroundColor Cyan
-Write-Host "  scp vpkebanii-images.tar root@wmpby:~/VPKebanii/" -ForegroundColor White
+Write-Host "  scp $archiveName root@wmpby:~/VPKebanii/" -ForegroundColor White
 
 Write-Host "`n[NEXT STEP] On server run:" -ForegroundColor Cyan
 Write-Host "  cd ~/VPKebanii" -ForegroundColor White
-Write-Host "  docker load -i vpkebanii-images.tar" -ForegroundColor White
-Write-Host "  rm vpkebanii-images.tar" -ForegroundColor White
+Write-Host "  docker load -i $archiveName" -ForegroundColor White
+Write-Host "  rm $archiveName" -ForegroundColor White
 Write-Host "  docker-compose down" -ForegroundColor White
 Write-Host "  docker-compose up -d" -ForegroundColor White
 Write-Host "  docker-compose ps" -ForegroundColor White
 
 Write-Host "`n"
 Read-Host "Press Enter to exit"
-  

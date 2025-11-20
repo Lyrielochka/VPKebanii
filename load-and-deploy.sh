@@ -3,9 +3,19 @@ set -euo pipefail
 
 cd ~/VPKebanii
 
-echo "Loading Docker images..."
-docker load -i vpkebanii-images.tar
-rm vpkebanii-images.tar
+# Find the latest tar file
+ARCHIVE=$(ls -t vpkebanii-images-*.tar 2>/dev/null | head -1)
+
+if [ -z "$ARCHIVE" ]; then
+    echo "[ERROR] No vpkebanii-images-*.tar file found"
+    exit 1
+fi
+
+echo "Loading Docker images from $ARCHIVE..."
+docker load -i "$ARCHIVE"
+
+# Keep archive for reference, but you can delete it
+# rm "$ARCHIVE"
 
 echo "Images loaded!"
 echo ""
@@ -26,3 +36,5 @@ echo "Deploy completed!"
 echo ""
 echo "Website available at:"
 echo "  https://wmp.by"
+echo ""
+echo "Used archive: $ARCHIVE"
