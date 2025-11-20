@@ -17,7 +17,7 @@ export function NewsFormModal({ item, onClose, onSuccess }) {
   const [newExtraImage, setNewExtraImage] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/images")
+    axios.get("http://wmp.by/api/images")
       .then((res) => setImageOptions(res.data))
       .catch((err) => console.error("Ошибка загрузки изображений:", err));
   }, []);
@@ -58,9 +58,9 @@ export function NewsFormModal({ item, onClose, onSuccess }) {
 
 
       if (item?.idNews) {
-        await axios.put(`http://localhost:3001/news/${item.idNews}`, payload);
+        await axios.put(`http://wmp.by/news/${item.idNews}`, payload);
       } else {
-        await axios.post("http://localhost:3001/news", payload);
+        await axios.post("http://wmp.by/news", payload);
       }
 
       onSuccess();
@@ -95,7 +95,7 @@ export function NewsFormModal({ item, onClose, onSuccess }) {
 
           {form.img && (
             <img
-              src={`http://localhost:3001/Images/${form.img}`}
+              src={`http://wmp.by/Images/${form.img}`}
               alt="preview"
               className="news-form-modal__preview"
               style={{ maxHeight: "150px", marginTop: "10px" }}

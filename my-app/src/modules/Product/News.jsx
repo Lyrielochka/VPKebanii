@@ -11,7 +11,7 @@ export function News() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/news")
+      .get("http://wmp.by/news")
       .then((res) => setNews(res.data.reverse()))
       .catch((err) => console.error("Ошибка загрузки новостей:", err));
   }, []);

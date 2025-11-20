@@ -29,7 +29,7 @@ export function Profile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/images")
+      .get("http://wmp.by/api/images")
       .then((res) => setImageOptions(res.data))
       .catch((err) => console.error("Ошибка загрузки изображений:", err));
   }, []);
@@ -37,7 +37,7 @@ export function Profile() {
   useEffect(() => {
     if (idUser) {
       axios
-        .get(`http://localhost:3001/profiles/user/${idUser}`)
+        .get(`http://wmp.by/profiles/user/${idUser}`)
         .then((res) => {
           const profile = res.data;
           if (!profile || !profile.idProfile) {
@@ -97,7 +97,7 @@ export function Profile() {
     }
 
     try {
-      await axios.put(`http://localhost:3001/profiles/${profileData.idProfile}`, {
+      await axios.put(`http://wmp.by/profiles/${profileData.idProfile}`, {
         fullName: profileData.fullName,
         gender: profileData.gender,
         parents: profileData.parents,
@@ -125,7 +125,7 @@ export function Profile() {
           <div className="profile__rank">
             {profileData.rank && (
               <img
-                src={`http://localhost:3001/Images/${profileData.rank}`}
+                src={`http://wmp.by/Images/${profileData.rank}`}
                 alt="Звание"
               />
             )}
@@ -147,7 +147,7 @@ export function Profile() {
           <div className="profile__avatar">
             {profileData.photo ? (
               <img
-                src={`http://localhost:3001/Images/${profileData.photo}`}
+                src={`http://wmp.by/Images/${profileData.photo}`}
                 alt="Аватар"
               />
             ) : (
@@ -253,7 +253,7 @@ export function Profile() {
               {profileData.tokens.map((token, index) => (
                 <div key={index} className="profile__token-item">
                   <img
-                    src={`http://localhost:3001/Images/${token}`}
+                    src={`http://wmp.by/Images/${token}`}
                     alt={`Жетон ${index + 1}`}
                   />
                   {role === "admin" && (

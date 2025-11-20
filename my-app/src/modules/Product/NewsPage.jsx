@@ -30,7 +30,7 @@ export function NewsPage() {
 
   const fetchNews = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/news");
+      const res = await axios.get("http://wmp.by/news");
       setNews(res.data.reverse());
     } catch (err) {
       console.error("Ошибка загрузки новостей:", err);
@@ -39,7 +39,7 @@ export function NewsPage() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/news/${id}`);
+      await axios.delete(`http://wmp.by/news/${id}`);
       fetchNews();
     } catch (err) {
       console.error("Ошибка удаления:", err);

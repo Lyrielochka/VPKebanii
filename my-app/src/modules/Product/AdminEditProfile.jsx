@@ -33,7 +33,7 @@ export function AdminEditProfile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/images")
+      .get("http://wmp.by/api/images")
       .then((res) => setImageOptions(res.data))
       .catch((err) => console.error("Ошибка загрузки изображений:", err));
   }, []);
@@ -41,7 +41,7 @@ export function AdminEditProfile() {
   useEffect(() => {
     if (idProfile) {
       axios
-        .get(`http://localhost:3001/profiles/${idProfile}`)
+        .get(`http://wmp.by/profiles/${idProfile}`)
         .then((res) => {
           const profile = res.data;
           setProfileData({
@@ -85,7 +85,7 @@ export function AdminEditProfile() {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:3001/profiles/${idProfile}`, {
+      await axios.put(`http://wmp.by/profiles/${idProfile}`, {
         fullName: profileData.fullName,
         gender: profileData.gender,
         parents: profileData.parents,
@@ -113,7 +113,7 @@ export function AdminEditProfile() {
           <div className="profile__rank">
             {profileData.rank && (
               <img
-                src={`http://localhost:3001/Images/${profileData.rank}`}
+                src={`http://wmp.by/Images/${profileData.rank}`}
                 alt="Звание"
               />
             )}
@@ -135,7 +135,7 @@ export function AdminEditProfile() {
           <div className="profile__avatar">
             {profileData.photo ? (
               <img
-                src={`http://localhost:3001/Images/${profileData.photo}`}
+                src={`http://wmp.by/Images/${profileData.photo}`}
                 alt="Аватар"
               />
             ) : (
@@ -241,7 +241,7 @@ export function AdminEditProfile() {
               {profileData.tokens.map((token, index) => (
                 <div key={index} className="profile__token-item">
                   <img
-                    src={`http://localhost:3001/Images/${token}`}
+                    src={`http://wmp.by/Images/${token}`}
                     alt={`Жетон ${index + 1}`}
                   />
                   {role === "admin" && (

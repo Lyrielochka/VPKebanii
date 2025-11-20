@@ -8,7 +8,7 @@ export function DiplomaFormModal({ item, onClose, onSuccess }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/images")
+      .get("http://wmp.by/api/images")
       .then((res) => setImageOptions(res.data))
       .catch((err) => console.error("Ошибка загрузки изображений:", err));
   }, []);
@@ -35,9 +35,9 @@ export function DiplomaFormModal({ item, onClose, onSuccess }) {
 
     try {
       if (item?.idDiploma) {
-        await axios.put(`http://localhost:3001/diplomas/${item.idDiploma}`, payload);
+        await axios.put(`http://wmp.by/diplomas/${item.idDiploma}`, payload);
       } else {
-        await axios.post("http://localhost:3001/diplomas", payload);
+        await axios.post("http://wmp.by/diplomas", payload);
       }
       onSuccess();
     } catch (err) {
@@ -74,7 +74,7 @@ export function DiplomaFormModal({ item, onClose, onSuccess }) {
 
           {form.img && (
             <img
-              src={`http://localhost:3001/Images/${form.img}`}
+              src={`http://wmp.by/Images/${form.img}`}
               alt="preview"
               className="diploma-form-modal__preview"
               style={{ maxHeight: "150px", marginTop: "10px" }}

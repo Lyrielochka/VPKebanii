@@ -1,9 +1,7 @@
-# Redirect all HTTP to HTTPS
 :80 {
   redir https://{host}{uri}
 }
 
-# HTTPS site with Let's Encrypt certificate
 wmp.by {
   encode gzip
 
@@ -23,4 +21,9 @@ wmp.by {
     Referrer-Policy "no-referrer"
     Content-Security-Policy "default-src 'self' 'unsafe-inline' data: https:;"
   }
+}
+
+# Если нужен прямой доступ к backend через :3001
+:3001 {
+  reverse_proxy backend:3001
 }

@@ -31,7 +31,7 @@ export function Advunture() {
 
   const fetchDiplomas = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/diplomas");
+      const res = await axios.get("http://wmp.by/diplomas");
       setDiplomas(res.data);
     } catch (err) {
       console.error("Ошибка загрузки дипломов:", err);
@@ -41,7 +41,7 @@ export function Advunture() {
   const handleDelete = async (id) => {
     if (!window.confirm("Удалить диплом?")) return;
     try {
-      await axios.delete(`http://localhost:3001/diplomas/${id}`);
+      await axios.delete(`http://wmp.by/diplomas/${id}`);
       fetchDiplomas();
     } catch (err) {
       console.error("Ошибка удаления:", err);
