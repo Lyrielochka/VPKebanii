@@ -28,8 +28,8 @@ Write-Host "`n[INFO] Exporting images...`n" -ForegroundColor Cyan
 
 # Export
 docker save `
-  vpkebanii-frontend:latest `
-  vpkebanii-backend:latest `
+  vpkebanii/frontend:latest `
+  vpkebanii/backend:latest `
   -o vpkebanii-images.tar
 
 if ($LASTEXITCODE -ne 0) {
