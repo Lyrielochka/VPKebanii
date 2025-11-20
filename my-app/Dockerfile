@@ -1,21 +1,31 @@
-### Multi-stage Dockerfile for React frontend (my-app)
+# Multi-stage Dockerfile for React frontend (my-app)
 FROM node:20-alpine AS build
 WORKDIR /app
 
+ENV NODE_OPTIONS="--max-old-space-size=2048"
+
 COPY package*.json ./
 # Using npm install instead of npm ci because lock file and peer deps are not in sync.
-RUN npm install --no-audit --no-fund --legacy-peer-deps
+RUN npm install --no-audit --no-fund --legacy-peer-deps --prefer-offline --no-optional
+
 COPY . .
 RUN npm run build
+
+# Remove unnecessary files
+RUN rm -rf node_modules src public tsconfig.json .env* .eslintrc* .gitignore
 
 FROM node:20-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
+
 RUN apk add --no-cache curl
+
 RUN npm install -g serve@14
+
 COPY --from=build /app/build ./build
 
 EXPOSE 3000
+
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD curl -f http://localhost:3000/ || exit 1
 
 CMD ["serve", "-s", "build", "-l", "3000"]
