@@ -9,7 +9,7 @@ export function AboutUs() {
 
       <div className="aboutUs__content">
         <div className="aboutUs__image">
-          <img src="/aus.png" alt="О нас" />
+          <img src="/kalash.png" alt="О нас" />
         </div>
 
         <div className="aboutUs__text">
