@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import { TestConnection } from "./data-access/test.connection";
+import { User } from "./entities/user.entity";
 import routerProfile from "./routers/profile.router";
 import routerUser from "./routers/user.router";
 import routerAuth from "./routers/auth.router";
@@ -18,6 +19,27 @@ const publicDir = path.resolve(__dirname, "..", "public");
 const runApp = async () => {
   try {
     await TestConnection.initialize();
+    // Seed admin user if missing
+    const adminEmail = process.env.ADMIN_EMAIL || "admin@example.com";
+    const adminPassword = process.env.ADMIN_PASSWORD || "admin123"; // TODO: replace with hashed storage
+    const adminRole = process.env.ADMIN_ROLE || "admin";
+
+    try {
+      const userRepo = TestConnection.getRepository(User);
+      const existingAdmin = await userRepo.findOne({ where: { role: adminRole } });
+      if (!existingAdmin) {
+        const adminUser = userRepo.create({
+          email: adminEmail,
+          password: adminPassword,
+          role: adminRole,
+          createdAt: new Date(),
+        });
+        await userRepo.save(adminUser);
+        console.log(`Seeded admin user: ${adminEmail}`);
+      }
+    } catch (seedErr) {
+      console.error("Failed to seed admin user", seedErr);
+    }
     // SQLite foreign key enabling removed; now using PostgreSQL
 
     process.on("uncaughtException", async (err) => {

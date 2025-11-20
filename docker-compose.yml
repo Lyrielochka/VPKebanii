@@ -28,10 +28,13 @@ services:
       DB_PASS: app_password
       DB_NAME: appdb
       NODE_ENV: production
+      ADMIN_EMAIL: admin@wmp.by
+      ADMIN_PASSWORD: supersecureadmin
+      ADMIN_ROLE: admin
     depends_on:
       - postgres
     ports:
-      - "3001"
+      - "3001:3001"
     restart: unless-stopped
 
   frontend:

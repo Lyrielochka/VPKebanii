@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../api";
 import { useNavigate } from "react-router-dom";
 import "../../theme/scss/AdminUsersPage.scss";
 
@@ -19,26 +19,25 @@ export function AdminUsersPage() {
       return;
     }
 
-    if (token) {
-      axios
-        .get("http://wmp.by/users-with-profiles", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setUsers(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error("Ошибка загрузки пользователей:", err);
-          setUnauthorized(true);
-          setLoading(false);
-        });
-    } else {
+    if (!token) {
       setUnauthorized(true);
       setLoading(false);
+      return;
     }
+
+    api
+      .get("/users-with-profiles", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setUsers(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Ошибка загрузки пользователей:", err);
+        setUnauthorized(true);
+        setLoading(false);
+      });
   }, []);
 
   const handleDeleteUser = async (idUser) => {
@@ -47,10 +46,8 @@ export function AdminUsersPage() {
     if (!confirm) return;
 
     try {
-      await axios.delete(`http://wmp.by/users/${idUser}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      await api.delete(`/users/${idUser}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
       setUsers((prev) => prev.filter((user) => user.idUser !== idUser));
     } catch (error) {
