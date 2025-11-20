@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
 
   backend:
-    image: vpkebanii-backend:latest
+    image: vpkebanii/backend:latest
     container_name: backend
     environment:
       DB_HOST: postgres
@@ -35,7 +35,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    image: vpkebanii-frontend:latest
+    image: vpkebanii/frontend:latest
     container_name: frontend
     depends_on:
       - backend
