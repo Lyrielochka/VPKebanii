@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import "../../theme/scss/OurTeam.scss";
 import { ProfileModal } from "./ProfileModal";
 
@@ -27,8 +27,8 @@ export function OurTeam() {
   };
 
   useEffect(() => {
-    axios
-      .get("http://wmp.by/profiles")
+    api
+      .get("/profiles")
       .then((res) => setProfiles(res.data))
       .catch((err) => console.error("Ошибка загрузки профилей:", err));
   }, []);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import "../../theme/scss/Profile.scss";
 
 export function Profile() {
@@ -28,16 +28,16 @@ export function Profile() {
   });
 
   useEffect(() => {
-    axios
-      .get("http://wmp.by/api/images")
+    api
+      .get("/images")
       .then((res) => setImageOptions(res.data))
       .catch((err) => console.error("Ошибка загрузки изображений:", err));
   }, []);
 
   useEffect(() => {
     if (idUser) {
-      axios
-        .get(`http://wmp.by/profiles/user/${idUser}`)
+      api
+        .get(`/profiles/user/${idUser}`)
         .then((res) => {
           const profile = res.data;
           if (!profile || !profile.idProfile) {
@@ -97,7 +97,7 @@ export function Profile() {
     }
 
     try {
-      await axios.put(`http://wmp.by/profiles/${profileData.idProfile}`, {
+      await api.put(`/profiles/${profileData.idProfile}`, {
         fullName: profileData.fullName,
         gender: profileData.gender,
         parents: profileData.parents,
@@ -125,7 +125,7 @@ export function Profile() {
           <div className="profile__rank">
             {profileData.rank && (
               <img
-                src={`http://wmp.by/Images/${profileData.rank}`}
+                src={`/Images/${profileData.rank}`}
                 alt="Звание"
               />
             )}
@@ -147,7 +147,7 @@ export function Profile() {
           <div className="profile__avatar">
             {profileData.photo ? (
               <img
-                src={`http://wmp.by/Images/${profileData.photo}`}
+                src={`/Images/${profileData.photo}`}
                 alt="Аватар"
               />
             ) : (
@@ -253,7 +253,7 @@ export function Profile() {
               {profileData.tokens.map((token, index) => (
                 <div key={index} className="profile__token-item">
                   <img
-                    src={`http://wmp.by/Images/${token}`}
+                    src={`/Images/${token}`}
                     alt={`Жетон ${index + 1}`}
                   />
                   {role === "admin" && (

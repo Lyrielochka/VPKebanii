@@ -31,22 +31,22 @@ const runApp = async () => {
     // 🟩 Статические файлы и изображения — подключаем до всего остального
     app.use(express.static(publicDir));
     app.use("/Images", express.static(publicDir));
+
+    // Healthcheck endpoint
+    app.get("/health", (_req, res) => {
+      res.status(200).json({ status: "ok" });
+    });
+
+    // Mount all business routers under /api for consistent proxying
     app.use("/api", routerImage);
+    app.use("/api", routerAuth);
+    app.use("/api", routerProfile);
+    app.use("/api", routerDiploma);
+    app.use("/api", routerNews);
 
-    // 🟨 Далее — обычные роутеры
-    app.use(routerAuth);
-    app.use(routerProfile);
-    app.use(routerDiploma);
-    app.use(routerNews);
-
-    // 🔒 Авторизация и защищённые роуты — в самом конце
+    // Protected routes (after auth middleware)
     app.use(authMiddleware);
-    app.use(routerUser);
-
-    // // Healthcheck endpoint for container orchestration
-    // app.get("/health", (_req, res) => {
-    //   res.status(200).json({ status: "ok" });
-    // });
+    app.use("/api", routerUser);
 
     app.listen(3001, () => console.log("Server is running on port 3001"));
   } catch (err: any) {

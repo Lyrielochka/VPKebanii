@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import "../../theme/scss/NewsPage.scss";
 import { Footer } from "./Footer";
 import { ScrollBar } from "./ScrollBar";
@@ -30,7 +30,7 @@ export function NewsPage() {
 
   const fetchNews = async () => {
     try {
-      const res = await axios.get("http://wmp.by/news");
+      const res = await api.get("/news");
       setNews(res.data.reverse());
     } catch (err) {
       console.error("Ошибка загрузки новостей:", err);
@@ -39,7 +39,7 @@ export function NewsPage() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://wmp.by/news/${id}`);
+      await api.delete(`/news/${id}`);
       fetchNews();
     } catch (err) {
       console.error("Ошибка удаления:", err);

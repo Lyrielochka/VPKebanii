@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import './login.scss';
 
 export const Login = () => {
@@ -30,7 +30,7 @@ export const Login = () => {
     if (Object.keys(validationErrors).length === 0) {
       try {
         const endpoint = isRegistering ? 'register' : 'login';
-        const res = await axios.post(`http://wmp.by/${endpoint}`, {
+        const res = await api.post(`/${endpoint}`, {
           email,
           password
         });
