@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../../api";
 import "../../theme/scss/Profile.scss";
 import { buildImageUrl, getImageOptions } from "../../services/imageService";
 
@@ -33,6 +33,7 @@ export function AdminEditProfile() {
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     let isMounted = true;
 
     getImageOptions()
@@ -46,12 +47,23 @@ export function AdminEditProfile() {
     return () => {
       isMounted = false;
     };
+=======
+    api
+      .get("/images")
+      .then((res) => setImageOptions(res.data))
+      .catch((err) => console.error("Ошибка загрузки изображений:", err));
+>>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
   }, []);
 
   useEffect(() => {
     if (idProfile) {
+<<<<<<< HEAD
       axios
         .get(`https://wmp.by/profiles/${idProfile}`)
+=======
+      api
+        .get(`/profiles/${idProfile}`)
+>>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
         .then((res) => {
           const profile = res.data;
           setProfileData({
@@ -95,7 +107,11 @@ export function AdminEditProfile() {
 
   const handleSave = async () => {
     try {
+<<<<<<< HEAD
       await axios.put(`https://wmp.by/profiles/${idProfile}`, {
+=======
+      await api.put(`/profiles/${idProfile}`, {
+>>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
         fullName: profileData.fullName,
         gender: profileData.gender,
         parents: profileData.parents,
@@ -123,7 +139,11 @@ export function AdminEditProfile() {
           <div className="profile__rank">
             {profileData.rank && (
               <img
+<<<<<<< HEAD
                 src={buildImageUrl(profileData.rank)}
+=======
+                src={`/Images/${profileData.rank}`}
+>>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
                 alt="Звание"
                 loading="lazy"
               />
@@ -146,7 +166,11 @@ export function AdminEditProfile() {
           <div className="profile__avatar">
             {profileData.photo ? (
               <img
+<<<<<<< HEAD
                 src={buildImageUrl(profileData.photo)}
+=======
+                src={`/Images/${profileData.photo}`}
+>>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
                 alt="Аватар"
                 loading="lazy"
               />
@@ -253,7 +277,11 @@ export function AdminEditProfile() {
               {profileData.tokens.map((token, index) => (
                 <div key={index} className="profile__token-item">
                   <img
+<<<<<<< HEAD
                     src={buildImageUrl(token)}
+=======
+                    src={`/Images/${token}`}
+>>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
                     alt={`Жетон ${index + 1}`}
                     loading="lazy"
                   />
