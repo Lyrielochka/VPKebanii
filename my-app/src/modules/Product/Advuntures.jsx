@@ -9,10 +9,8 @@ export function Advunture() {
   const staticDiplomas = [
     { name: "Диплом 1", img: "/diplom1.jpg" },
     { name: "Диплом 2", img: "/diplom2.jpg" },
-    { name: "Диплом 3", img: "/diplom1.jpg" },
-    { name: "Диплом 4", img: "/diplom1.jpg" },
-    { name: "Диплом 5", img: "/diplom1.jpg" },
-    { name: "Диплом 6", img: "/diplom1.jpg" },
+    { name: "Диплом 3", img: "/Диплом Республика.jpg" },
+    { name: "Диплом 4", img: "/Диплом область.jpg" },
   ];
 
   const [diplomas, setDiplomas] = useState([]);
