@@ -1,46 +1,51 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "🚀 Быстрая сборка Docker образов..."
+echo ""
+echo "Rapid Docker image build..."
+echo ""
 
-# Включить BuildKit для максимальной оптимизации
+# Enable BuildKit
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
 export BUILDKIT_PROGRESS=plain
 
-# Сборка с максимальным параллелизмом
+# Build
+echo "[INFO] Building frontend and backend..."
 docker compose build \
   --no-cache \
   --parallel \
   --build-arg NODE_OPTIONS="--max-old-space-size=8192"
 
-echo "✅ Сборка завершена!"
 echo ""
-echo "📦 Экспорт образов..."
+echo "[SUCCESS] Build completed!"
+echo ""
+echo "[INFO] Exporting images..."
+echo ""
 
-# Экспорт образов в архив
+# Export
 docker save \
-  vpkebanii/frontend:latest \
-  vpkebanii/backend:latest \
-  postgres:16-alpine \
-  caddy:2-alpine \
+  vpkebanii-frontend:latest \
+  vpkebanii-backend:latest \
   -o vpkebanii-images.tar
 
-echo "✅ Образы сохранены в vpkebanii-images.tar"
 echo ""
-echo "📊 Размер архива:"
-ls -lh vpkebanii-images.tar
+echo "[SUCCESS] Images saved to vpkebanii-images.tar"
+echo ""
+echo "[INFO] Archive size:"
+ls -lh vpkebanii-images.tar | awk '{print "  " $5}'
 
 echo ""
-echo "✅ Готово к загрузке на сервер!"
+echo "[SUCCESS] Ready to upload to server!"
 echo ""
-echo "📤 Для загрузки выполните:"
+echo "[NEXT STEP] Upload archive:"
 echo "  scp vpkebanii-images.tar root@wmpby:~/VPKebanii/"
 echo ""
-echo "🚀 На сервере выполните:"
+echo "[NEXT STEP] On server run:"
 echo "  cd ~/VPKebanii"
 echo "  docker load -i vpkebanii-images.tar"
 echo "  rm vpkebanii-images.tar"
 echo "  docker compose down --remove-orphans"
 echo "  docker compose up -d"
 echo "  docker compose ps"
+echo ""

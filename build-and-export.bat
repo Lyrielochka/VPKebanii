@@ -2,60 +2,61 @@
 setlocal enabledelayedexpansion
 
 echo.
-echo 🚀 Быстрая сборка Docker образов...
+echo Rapid Docker image build...
 echo.
 
-REM Включить BuildKit для максимальной оптимизации
+REM Enable BuildKit
 set DOCKER_BUILDKIT=1
 set COMPOSE_DOCKER_CLI_BUILD=1
 set BUILDKIT_PROGRESS=plain
 
-REM Сборка с максимальным параллелизмом
-echo [INFO] Сборка frontend и backend...
+REM Build
+echo [INFO] Building frontend and backend...
 docker compose build ^
   --no-cache ^
   --parallel ^
   --build-arg NODE_OPTIONS="--max-old-space-size=8192"
 
 if errorlevel 1 (
-  echo [ERROR] Ошибка при сборке образов
+  echo [ERROR] Build failed
   pause
   exit /b 1
 )
 
 echo.
-echo ✅ Сборка завершена!
+echo [SUCCESS] Build completed!
 echo.
-echo 📦 Экспорт образов...
+echo [INFO] Exporting images...
 echo.
 
-REM Экспорт образов в архив
+REM Export
 docker save ^
-  vpkebanii/frontend:latest ^
-  vpkebanii/backend:latest ^
-  postgres:16-alpine ^
-  caddy:2-alpine ^
+  vpkebanii-frontend:latest ^
+  vpkebanii-backend:latest ^
   -o vpkebanii-images.tar
 
 if errorlevel 1 (
-  echo [ERROR] Ошибка при экспорте образов
+  echo [ERROR] Export failed
   pause
   exit /b 1
 )
 
 echo.
-echo ✅ Образы сохранены в vpkebanii-images.tar
+echo [SUCCESS] Images saved to vpkebanii-images.tar
 echo.
-echo 📊 Размер архива:
-for %%A in (vpkebanii-images.tar) do echo   %%~zA байт
+echo [INFO] Archive size:
+for %%A in (vpkebanii-images.tar) do (
+  set /A size=%%~zA / 1048576
+  echo   !size! MB
+)
 
 echo.
-echo ✅ Готово к загрузке на сервер!
+echo [SUCCESS] Ready to upload to server!
 echo.
-echo 📤 Для загрузки выполните:
+echo [NEXT STEP] Upload archive:
 echo   scp vpkebanii-images.tar root@wmpby:~/VPKebanii/
 echo.
-echo 🚀 На сервере выполните:
+echo [NEXT STEP] On server run:
 echo   cd ~/VPKebanii
 echo   docker load -i vpkebanii-images.tar
 echo   rm vpkebanii-images.tar
