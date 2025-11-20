@@ -1,0 +1,24 @@
+# Caddy reverse proxy configuration
+# Frontend container: frontend:3000
+# Backend API: backend:3001 (prefixed with /api or direct image/static routes)
+
+:80 {
+  encode gzip
+
+  @api path /api* /Images* /public* /health
+  handle @api {
+    reverse_proxy backend:3001
+  }
+
+  # All other requests go to React frontend single-page app
+  handle {
+    reverse_proxy frontend:3000
+  }
+
+  header {
+    Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    X-Content-Type-Options "nosniff"
+    X-Frame-Options "DENY"
+    Referrer-Policy "no-referrer"
+  }
+}

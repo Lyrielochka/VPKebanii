@@ -43,6 +43,11 @@ const runApp = async () => {
     app.use(authMiddleware);
     app.use(routerUser);
 
+    // Healthcheck endpoint for container orchestration
+    app.get("/health", (_req, res) => {
+      res.status(200).json({ status: "ok" });
+    });
+
     app.listen(3001, () => console.log("Server is running on port 3001"));
   } catch (err: any) {
     console.error(`${err.name}: ${err.message}`);
