@@ -1,0 +1,9 @@
+# Backend build context exclusions
+node_modules
+dist
+Dockerfile
+.git
+.gitignore
+README.md
+test
+mock
