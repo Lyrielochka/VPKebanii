@@ -30,11 +30,7 @@ export function NewsPage() {
 
   const fetchNews = async () => {
     try {
-<<<<<<< HEAD
-      const res = await axios.get("https://wmp.by/news");
-=======
       const res = await api.get("/news");
->>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
       setNews(res.data.reverse());
     } catch (err) {
       console.error("Ошибка загрузки новостей:", err);
@@ -43,11 +39,7 @@ export function NewsPage() {
 
   const handleDelete = async (id) => {
     try {
-<<<<<<< HEAD
-      await axios.delete(`https://wmp.by/news/${id}`);
-=======
       await api.delete(`/news/${id}`);
->>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
       fetchNews();
     } catch (err) {
       console.error("Ошибка удаления:", err);

@@ -19,27 +19,7 @@ export function AdminUsersPage() {
       return;
     }
 
-<<<<<<< HEAD
-    if (token) {
-      axios
-        .get("https://wmp.by/users-with-profiles", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setUsers(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error("Ошибка загрузки пользователей:", err);
-          setUnauthorized(true);
-          setLoading(false);
-        });
-    } else {
-=======
     if (!token) {
->>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
       setUnauthorized(true);
       setLoading(false);
       return;
@@ -66,15 +46,8 @@ export function AdminUsersPage() {
     if (!confirm) return;
 
     try {
-<<<<<<< HEAD
-      await axios.delete(`https://wmp.by/users/${idUser}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-=======
       await api.delete(`/users/${idUser}`, {
         headers: { Authorization: `Bearer ${token}` },
->>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
       });
       setUsers((prev) => prev.filter((user) => user.idUser !== idUser));
     } catch (error) {

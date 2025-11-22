@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../theme/scss/DiplomaFormModal.scss";
 import { buildImageUrl, getImageOptions } from "../../services/imageService";

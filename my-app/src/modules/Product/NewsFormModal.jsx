@@ -12,7 +12,6 @@ export function NewsFormModal({ item, onClose, onSuccess }) {
     summary: "",
     img: "",
   });
-
   const [imageOptions, setImageOptions] = useState([]);
   const [extraImages, setExtraImages] = useState([]);
   const [newExtraImage, setNewExtraImage] = useState("");
@@ -26,17 +25,11 @@ export function NewsFormModal({ item, onClose, onSuccess }) {
 
   useEffect(() => {
     let isMounted = true;
-
     getImageOptions()
       .then((images) => {
-        if (isMounted) {
-          setImageOptions(images);
-        }
+        if (isMounted) setImageOptions(images);
       })
-      .catch((err) =>
-        console.error("�?�?��+��� �����?�?�?����� ����?�+�?�����?���:", err)
-      );
-
+      .catch((err) => console.error("Ошибка загрузки изображений:", err));
     return () => {
       isMounted = false;
     };
@@ -45,7 +38,6 @@ export function NewsFormModal({ item, onClose, onSuccess }) {
   useEffect(() => {
     if (item) {
       const imgName = normalizeImageName(item.img || "");
-
       setForm({
         title: item.title || "",
         category: item.category || "",
@@ -54,38 +46,30 @@ export function NewsFormModal({ item, onClose, onSuccess }) {
         summary: item.summary || "",
         img: imgName,
       });
-
       setExtraImages((item.images || []).map(normalizeImageName));
     }
   }, [item]);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const coverImage = normalizeImageName(form.img);
       const normalizedExtras = extraImages.map(normalizeImageName);
-
       const payload = {
         ...form,
         img: coverImage ? `/Images/${coverImage}` : "",
-        images: normalizedExtras
-          .filter(Boolean)
-          .map((img) => `/Images/${img}`),
+        images: normalizedExtras.filter(Boolean).map((img) => `/Images/${img}`),
       };
-
       if (item?.idNews) {
         await axios.put(`https://wmp.by/news/${item.idNews}`, payload);
       } else {
         await axios.post("https://wmp.by/news", payload);
       }
-
       onSuccess();
     } catch (err) {
-      console.error("�?�?��+��� �?�?�:�?���?��?��? �?�?�?�?�?�'��:", err);
+      console.error("Ошибка сохранения новости:", err);
     }
   };
 
@@ -93,81 +77,51 @@ export function NewsFormModal({ item, onClose, onSuccess }) {
     <div className="news-form-modal">
       <div className="news-form-modal__overlay" onClick={onClose}></div>
       <div className="news-form-modal__content">
-        <h2>{item ? "����?����'��?�?�?���'�? �?�?�?�?�?�'�?" : "�"�?�+���?��'�? �?�?�?�?�?�'�?"}</h2>
+        <h2>{item ? "Редактировать новость" : "Добавить новость"}</h2>
         <form onSubmit={handleSubmit}>
-          <input type="text" name="title" placeholder="�-���?�?�>�?�?�?��" value={form.title} onChange={handleChange} required />
-          <input type="text" name="category" placeholder="�?���'��?�?�?��?" value={form.category} onChange={handleChange} required />
-          <input type="text" name="author" placeholder="�?�?�'�?�?" value={form.author} onChange={handleChange} required />
-          <input type="text" name="date" placeholder="�"���'��" value={form.date} onChange={handleChange} required />
-          <textarea name="summary" placeholder="�?�?���'��?�� �?����?���?���" value={form.summary} onChange={handleChange} required />
-
+          <input type="text" name="title" placeholder="Заголовок" value={form.title} onChange={handleChange} required />
+          <input type="text" name="category" placeholder="Категория" value={form.category} onChange={handleChange} required />
+          <input type="text" name="author" placeholder="Автор" value={form.author} onChange={handleChange} required />
+          <input type="text" name="date" placeholder="Дата" value={form.date} onChange={handleChange} required />
+          <textarea name="summary" placeholder="Краткое описание" value={form.summary} onChange={handleChange} required />
           <label className="news-form-modal__file">
-            <span className="custom-upload-button">�?"? �"�>���?�?�?�� �"�?�'�?</span>
+            <span className="custom-upload-button">Обложка новости</span>
             <select name="img" value={form.img} onChange={handleChange} required className="hidden-select">
-              <option value="">-- �'�<�+��?��'�� ����?�+�?�����?��� --</option>
+              <option value="">-- Выберите изображение --</option>
               {imageOptions.map((filename) => (
-                <option key={filename} value={filename}>
-                  {filename}
-                </option>
+                <option key={filename} value={filename}>{filename}</option>
               ))}
             </select>
           </label>
-
           {form.img && (
-            <img
-              src={buildImageUrl(form.img)}
-              alt="preview"
-              loading="lazy"
-              className="news-form-modal__preview"
-              style={{ maxHeight: "150px", marginTop: "10px" }}
-            />
+            <img src={buildImageUrl(form.img)} alt="preview" loading="lazy" className="news-form-modal__preview" style={{ maxHeight: "150px", marginTop: "10px" }} />
           )}
-
           <div className="news-form-modal__extra">
-            <label>�"�?���?�>�?��'��>�?�?�<�� ����?�+�?�����?��?:</label>
+            <label>Дополнительные изображения:</label>
             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-              <select
-                value={newExtraImage}
-                onChange={(e) => setNewExtraImage(e.target.value)}
-              >
-                <option value="">-- �'�<�+��?��'�� ����?�+�?�����?��� --</option>
+              <select value={newExtraImage} onChange={(e) => setNewExtraImage(e.target.value)}>
+                <option value="">-- Выберите изображение --</option>
                 {imageOptions.map((filename) => (
-                  <option key={filename} value={filename}>
-                    {filename}
-                  </option>
+                  <option key={filename} value={filename}>{filename}</option>
                 ))}
               </select>
-              <button
-                type="button"
-                onClick={() => {
-                  const normalized = normalizeImageName(newExtraImage);
-                  if (normalized && !extraImages.includes(normalized)) {
-                    setExtraImages([...extraImages, normalized]);
-                  }
-                  setNewExtraImage("");
-                }}
-              >
-                �?
-              </button>
+              <button type="button" onClick={() => {
+                const normalized = normalizeImageName(newExtraImage);
+                if (normalized && !extraImages.includes(normalized)) {
+                  setExtraImages([...extraImages, normalized]);
+                }
+                setNewExtraImage("");
+              }}>+</button>
             </div>
-
             <ul>
               {extraImages.map((img, i) => (
-                <li key={i}>
-                  {img}{" "}
-                  <button type="button" onClick={() => {
-                    setExtraImages(extraImages.filter((_, index) => index !== i));
-                  }}>
-                    �??
-                  </button>
-                </li>
+                <li key={i}>{img} <button type="button" onClick={() => setExtraImages(extraImages.filter((_, index) => index !== i))}>✖</button></li>
               ))}
             </ul>
           </div>
-
           <div className="news-form-modal__actions">
-            <button type="submit">���?�:�?���?��'�?</button>
-            <button type="button" onClick={onClose}>�?�'�?��?��</button>
+            <button type="submit">Сохранить</button>
+            <button type="button" onClick={onClose}>Отмена</button>
           </div>
         </form>
       </div>

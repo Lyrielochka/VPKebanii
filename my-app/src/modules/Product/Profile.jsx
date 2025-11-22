@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../../api";
+import axios from "axios";
 import "../../theme/scss/Profile.scss";
 import { buildImageUrl, getImageOptions } from "../../services/imageService";
 
@@ -29,37 +30,18 @@ export function Profile() {
   });
 
   useEffect(() => {
-<<<<<<< HEAD
-    let isMounted = true;
-
-    getImageOptions()
-      .then((images) => {
-        if (isMounted) {
-          setImageOptions(images);
-        }
-      })
-      .catch((err) => console.error("Failed to load images:", err));
-
-    return () => {
-      isMounted = false;
-    };
-=======
     api
       .get("/images")
       .then((res) => setImageOptions(res.data))
       .catch((err) => console.error("Ошибка загрузки изображений:", err));
->>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
   }, []);
 
   useEffect(() => {
     if (idUser) {
-<<<<<<< HEAD
       axios
         .get(`https://wmp.by/profiles/user/${idUser}`)
-=======
       api
         .get(`/profiles/user/${idUser}`)
->>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
         .then((res) => {
           const profile = res.data;
           if (!profile || !profile.idProfile) {
@@ -119,11 +101,7 @@ export function Profile() {
     }
 
     try {
-<<<<<<< HEAD
       await axios.put(`https://wmp.by/profiles/${profileData.idProfile}`, {
-=======
-      await api.put(`/profiles/${profileData.idProfile}`, {
->>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
         fullName: profileData.fullName,
         gender: profileData.gender,
         parents: profileData.parents,
@@ -151,11 +129,7 @@ export function Profile() {
           <div className="profile__rank">
             {profileData.rank && (
               <img
-<<<<<<< HEAD
-                src={buildImageUrl(profileData.rank)}
-=======
                 src={`/Images/${profileData.rank}`}
->>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
                 alt="Звание"
                 loading="lazy"
               />
@@ -178,11 +152,7 @@ export function Profile() {
           <div className="profile__avatar">
             {profileData.photo ? (
               <img
-<<<<<<< HEAD
-                src={buildImageUrl(profileData.photo)}
-=======
                 src={`/Images/${profileData.photo}`}
->>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
                 alt="Аватар"
                 loading="lazy"
               />
@@ -289,11 +259,7 @@ export function Profile() {
               {profileData.tokens.map((token, index) => (
                 <div key={index} className="profile__token-item">
                   <img
-<<<<<<< HEAD
-                    src={buildImageUrl(token)}
-=======
                     src={`/Images/${token}`}
->>>>>>> 53f0a549a4394f977e89e0b0e9c6d20634ff205b
                     alt={`Жетон ${index + 1}`}
                     loading="lazy"
                   />
